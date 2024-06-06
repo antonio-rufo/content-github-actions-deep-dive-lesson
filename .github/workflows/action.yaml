@@ -110,6 +110,18 @@ jobs:
             --s3-bucket acloud-test-github-actions \
             --s3-key ${{ github.sha }}.zip \
             --publish
+
+  docs:
+    runs-on: ubuntu-latest
+    needs: deploy
+    steps:
+      - name: checkout the code
+        uses: actions/checkout@v2
+      - name: deploy docs
+        uses: mhausenblas/mkdocs-deploy-gh-pages@master
+        env:
+          GITHUB-TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CONFIG_FILE: mkdocs.yaml
       
          
          
