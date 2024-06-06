@@ -77,14 +77,12 @@ jobs:
           aws-region: ap-southeast-2
       - name: create test function
         run: |
-          aws lambda create-function --function-name test-function --role arn:aws:iam::130541009828:role/my-lambda-role \  
-            --code S3Bucket=acloud-test-github-actions,S3Key=${{ github.sha }}.zip \  
-            --handler lambda_function.lambda_handler --runtime python3.8
+          aws lambda create-function --function-name test-function-gha --role arn:aws:iam::130541009828:role/my-lambda-role --code S3Bucket=acloud-test-github-actions,S3Key=${{ github.sha }}.zip --handler lambda_function.lambda_handler --runtime python3.8 
       - name: wait 30 seconds
         run: sleep 30  
       - name: Destroy test function  
         if: ${{ always() }}  
-        run: aws lambda delete-function --function-name test-function        
+        run: aws lambda delete-function --function-name test-function-gha       
           
   deploy:
     runs-on: ubuntu-latest
